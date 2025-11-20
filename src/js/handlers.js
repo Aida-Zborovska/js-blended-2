@@ -3,24 +3,7 @@ import { refs } from './refs';
 import localStorageApi from './local-storage-api';
 import { renderTasks } from './render-tasks';
 
-// Після натискання кнопки "Add" завдання має бути додано до списку.
-
-// 4. Видалення завдань:
-
-// Кожне завдання має бути видалене за допомогою кнопки "Delete".
-
-// 5. Збереження в localStorage:
-
-// Завдання зберігаються в localStorage після кожного додавання чи видалення.
-
-// Після перезавантаження сторінки список завдань має завантажуватися з localStorage.
-
-// 6. Перемикач теми:
-
-// Додайте можливість перемикати тему (світлу чи темну).
-
-// Збереження вибраної теми у localStorage.
-// При перезавантаженні сторінки перевіряти, яка тема була обрана, і застосовувати її.
+const BODY = document.body;
 
 export function onFormSubmit(e) {
   e.preventDefault();
@@ -28,7 +11,7 @@ export function onFormSubmit(e) {
   const name = taskName.value.trim();
   const description = taskDescription.value.trim();
   if (!name || !description) {
-    alert('не всі поля заповнені');
+    alert('не всі поля заповнені'); ///////////============== isiToast
     return;
   }
   const task = {
@@ -51,4 +34,24 @@ export function onTaskDelete(e) {
   localStorageApi.deleteTask(taskId);
   const tasks = localStorageApi.getTasks();
   renderTasks(tasks);
+}
+
+export function applyLocalTheme() {
+  const theme = localStorageApi.getTheme();
+  setThemeClass(theme);
+}
+
+function setThemeClass(theme) {
+  if (theme === 'theme-dark') {
+    BODY.classList.replace('theme-light', 'theme-dark');
+  } else {
+    BODY.classList.replace('theme-dark', 'theme-light');
+  }
+}
+
+export function onThemeToggle() {
+  const isDark = BODY.classList.contains('theme-dark');
+  const newTheme = isDark ? 'theme-light' : 'theme-dark';
+  setThemeClass(newTheme);
+  localStorageApi.setTheme(newTheme);
 }
