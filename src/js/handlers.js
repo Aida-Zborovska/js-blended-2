@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { refs } from './refs';
+import iziToast from 'izitoast';
 import localStorageApi from './local-storage-api';
 import { renderTasks } from './render-tasks';
 
@@ -11,7 +11,7 @@ export function onFormSubmit(e) {
   const name = taskName.value.trim();
   const description = taskDescription.value.trim();
   if (!name || !description) {
-    alert('не всі поля заповнені'); ///////////============== isiToast
+    showAlert();
     return;
   }
   const task = {
@@ -54,4 +54,13 @@ export function onThemeToggle() {
   const newTheme = isDark ? 'theme-light' : 'theme-dark';
   setThemeClass(newTheme);
   localStorageApi.setTheme(newTheme);
+}
+
+function showAlert() {
+  iziToast.show({
+    message: 'Всі поля мають бути заповнені',
+    position: 'topRight',
+    messageColor: '#FFFFFF',
+    backgroundColor: '#EF4040',
+  });
 }

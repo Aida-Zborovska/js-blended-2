@@ -44,3 +44,9 @@
   background-color: rgb(245, 245, 245);
   transition: all 250ms ease-in-out;
 }
+
+.iziToast-wrapper-topRight {
+  top: 50px;
+  right: 0;
+  text-align: right;
+}
